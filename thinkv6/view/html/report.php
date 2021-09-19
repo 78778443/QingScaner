@@ -303,7 +303,7 @@ text-autospace:none'><b><span lang=EN-US style='font-size:26.0pt;font-family:
   
 
     <p class=MsoNormal align=center style='text-align:center'><span
-            style='font-size:16.0pt;font-family:"微软雅黑","sans-serif"'>TideSec安全团队</span><span
+            style='font-size:16.0pt;font-family:"微软雅黑","sans-serif"'>汤青松</span><span
             lang=EN-US><o:p></o:p></span></p>
 
     <p class=MsoNormal align=center style='text-align:center'><span
@@ -359,7 +359,7 @@ mso-fareast-language:ZH-CN;mso-bidi-language:AR-SA'><br clear=all
     <h2 style='margin-top:18.0pt;margin-right:0cm;margin-bottom:18.0pt;margin-left:
 0cm;line-height:20.75pt;page-break-after:avoid'><a name="_Toc373792036"><b><span
             lang=EN-US style='font-size:16.0pt;font-family:宋体'>2. </span></b></a><b><span
-            lang=EN-US style='font-size:16.0pt;font-family:宋体'>WDScanner</span></b><b><span
+            lang=EN-US style='font-size:16.0pt;font-family:宋体'>QingScanner</span></b><b><span
             style='font-size:16.0pt;font-family:宋体'>简介<span lang=EN-US><o:p></o:p></span></span></b></h2>
 
     <p class=MsoNormal align=left style='text-align:left;text-indent:28.0pt;
@@ -367,13 +367,13 @@ mso-char-indent-count:2.0;line-height:150%;mso-pagination:none'><span
             style='font-size:12.0pt;line-height:150%;font-family:宋体;mso-bidi-font-family:
 "Times New Roman";mso-bidi-font-weight:bold'>近几年，随着互联网各种安全漏洞愈演愈烈，<span
             lang=EN-US>OPENSSL</span>心脏滴血漏洞、<span lang=EN-US>JAVA</span>反序列化漏洞、<span
-            lang=EN-US>STRUTS</span>命令执行漏洞、<span lang=EN-US>ImageMagick</span>命令执行漏洞等高危漏洞频繁爆发。在这种情况下，为了能在漏洞爆发后快速形成漏洞检测能力，同时能对网站或主机进行全面快速的安全检测，TideSec安全团队开发了分布式<span
-            lang=EN-US>web</span>安全监测平台<span lang=EN-US>WDScanner</span>。<span lang=EN-US><o:p></o:p></span></span></p>
+            lang=EN-US>STRUTS</span>命令执行漏洞、<span lang=EN-US>ImageMagick</span>命令执行漏洞等高危漏洞频繁爆发。在这种情况下，为了能在漏洞爆发后快速形成漏洞检测能力，同时能对网站或主机进行全面快速的安全检测，汤青松开发了分布式<span
+            lang=EN-US>web</span>安全监测平台<span lang=EN-US>QingScanner</span>。<span lang=EN-US><o:p></o:p></span></span></p>
 
     <p class=MsoNormal align=left style='text-align:left;text-indent:28.0pt;
 mso-char-indent-count:2.0;line-height:150%;mso-pagination:none'><span
             lang=EN-US style='font-size:12.0pt;line-height:150%;font-family:宋体;mso-bidi-font-family:
-"Times New Roman";mso-bidi-font-weight:bold'>WDScanner</span><span
+"Times New Roman";mso-bidi-font-weight:bold'>QingScanner</span><span
             style='font-size:12.0pt;line-height:150%;font-family:宋体;mso-bidi-font-family:
 "Times New Roman";mso-bidi-font-weight:bold'>平台主要包括如下功能：分布式<span lang=EN-US>web</span>漏洞扫描、客户管理、漏洞定期扫描、网站爬虫、暗链检测、网站指纹识别、漏洞定向检测、代理搜集及部署、密码定向破解、社工库查询等功能。<span
             lang=EN-US><o:p></o:p></span></span></p>
@@ -400,7 +400,7 @@ mso-char-indent-count:2.0;line-height:150%;mso-pagination:none'><span
   padding:0cm 5.4pt 0cm 5.4pt;height:1.0cm'>
                 <p class=1 style='margin-top:12.0pt;margin-right:0cm;margin-bottom:12.0pt;
   margin-left:0cm;text-indent:0cm;mso-char-indent-count:0'><span
-                        style='font-size:12.0pt;font-family:宋体'>TideSec安全团队<span
+                        style='font-size:12.0pt;font-family:宋体'>汤青松<span
                         lang=EN-US><o:p></o:p></span></span></p>
             </td>
         </tr>
@@ -438,7 +438,7 @@ mso-char-indent-count:2.0;line-height:150%;mso-pagination:none'><span
                 <p class=1 style='margin-top:12.0pt;margin-right:0cm;margin-bottom:12.0pt;
   margin-left:0cm;text-indent:0cm;mso-char-indent-count:0'><span
                         style='font-size:12.0pt;font-family:宋体'>分布式<span
-                        lang=EN-US>web</span>安全监测平台<span lang=EN-US>WDScanner<o:p></o:p></span></span></p>
+                        lang=EN-US>web</span>安全监测平台<span lang=EN-US>QingScanner<o:p></o:p></span></span></p>
             </td>
         </tr>
         <tr style='mso-yfti-irow:3;height:1.0cm'>

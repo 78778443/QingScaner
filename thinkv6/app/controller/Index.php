@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\BaseController;
+use app\model\Customer;
 use think\facade\Db;
 use think\facade\Request;
 use think\facade\View;
@@ -199,7 +200,11 @@ class Index extends BaseController
         } else {
             $html_str = "";
         }
-        return View::fetch('html/manager', ['html_str' => $html_str]);
+
+        $data = [];
+        $data['html_str'] = $html_str;
+        $data['customer'] = Customer::getCustomer();
+        return View::fetch('html/manager', $data);
     }
 
 
@@ -861,7 +866,7 @@ class Index extends BaseController
 
         }
 
-        return View::fetch('html/pro',['html_str'=>$html_str]);
+        return View::fetch('html/pro', ['html_str' => $html_str]);
     }
 
     function customer()
@@ -1238,9 +1243,9 @@ class Index extends BaseController
                                        </td></tr></thead>\r\n";
 
         }
-
-
-        return View::fetch('html/scan', ['html_str' => $html_str]);
+        $data = ['html_str' => $html_str];
+        $data['customer'] = Customer::getCustomer();
+        return View::fetch('html/scan', $data);
     }
 
     function info()
@@ -1406,8 +1411,9 @@ class Index extends BaseController
             $html_str = "";
 
         }
-
-        return View::fetch('html/info',['html_str'=>$html_str]);
+        $data = ['html_str' => $html_str];
+        $data['customer'] = Customer::getCustomer();
+        return View::fetch('html/info', $data);
     }
 
     function vul()
@@ -2117,8 +2123,9 @@ class Index extends BaseController
             $html_str = "";
 
         }
-
-        return View::fetch('html/spider',['html_str'=>$html_str]);
+        $data = ['html_str' => $html_str];
+        $data['customer']= Customer::getCustomer();
+        return View::fetch('html/spider', $data);
     }
 
     function editscan()
@@ -2234,7 +2241,7 @@ class Index extends BaseController
             $html_str = "";
         }
 
-        return View::fetch('html/point',['html_str'=>$html_str]);
+        return View::fetch('html/point', ['html_str' => $html_str]);
     }
 
 
@@ -2323,7 +2330,7 @@ class Index extends BaseController
             $html_str = "";
         }
 
-        return View::fetch('html/set',['html_str'=>$html_str]);
+        return View::fetch('html/set', ['html_str' => $html_str]);
 
     }
 
@@ -2391,7 +2398,7 @@ class Index extends BaseController
         $results = Db::table('valid_ip')->limit(100)->order('score')->select()->toArray();
 
         if ($results) {
-            foreach ($results as $i => $fs){
+            foreach ($results as $i => $fs) {
                 $id = $i;
                 $ip = $fs["content"];
                 $test_times = $fs["test_times"];
@@ -2400,7 +2407,7 @@ class Index extends BaseController
                 $score = $fs["score"];
 
                 $html_str = "
-									<tr>
+									<tr >
 										<td>
 											$id
 										</td>
@@ -2426,12 +2433,11 @@ class Index extends BaseController
 									</tr>\r\n";
                 $i++;
             }
-        }
-        else {
+        } else {
             $html_str = "";
         }
 
-        return View::fetch('html/proxy',['html_str'=>$html_str]);
+        return View::fetch('html/proxy', ['html_str' => $html_str]);
     }
 
 

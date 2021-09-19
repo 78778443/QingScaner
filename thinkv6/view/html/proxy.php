@@ -19,7 +19,7 @@
                         &nbsp;&nbsp;&nbsp;代理接口：如自己编写程序时想直接调用代理IP地址数据，可直接访问<a href="proxy-ip.php" target="_blank">proxy-ip.php</a>，返回按得分排序的ip地址列表。
                     </p>
                     <p>
-                        &nbsp;&nbsp;&nbsp;联系我们：TideSec安全团队
+                        &nbsp;&nbsp;&nbsp;联系我们：汤青松
                     </p>
                 </div>
             </div>

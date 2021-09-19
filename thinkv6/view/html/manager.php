@@ -101,17 +101,9 @@
 								<label>URL&nbsp;&nbsp;&nbsp;<font color="orange" size="2px">tag：添加多个URL时使用回车换行，每行一个URL地址</font></label><textarea rows="5" cols="200" style="width:500px" name="url"></textarea>
 								<label>所属客户</label>
 								<select name="customer">
-									<?php
-								global $db;
-
-								$sql = "SELECT * FROM customer order by convert(name using gbk) ASC";
-								$results = $db->query($sql);
-									while ($fs = $db->fetch_array($results)){
-									?>
-									<option value="<?php echo $fs['0'];?>"><?php echo $fs['1'];?></option>
-									<?php
-								} ?>
-
+                                    {foreach $customer as $key=>$vo }
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                    {/foreach}
 								</select>
 								<label>扫描周期</label>
 								<select name="delay">
@@ -152,16 +144,9 @@
 								<select name="customer">
 									<option value="">所有客户</option>
 
-									<?php
-								    global $db;
-								    $sql = "SELECT * FROM customer order by name desc";
-
-								    $results = $db->query($sql);
-									while ($fs = $db->fetch_array($results)){
-									?>
-									<option value="<?php echo $fs['0'];?>"><?php echo $fs['1'];?></option>
-									<?php
-								} ?>
+                                    {foreach $customer as $key=>$vo }
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                    {/foreach}
 
 								</select>
 								<label>扫描周期</label>

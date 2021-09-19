@@ -83,19 +83,9 @@
 								<label>所属客户</label>
 
 								<select name="customer">
-
-									<?php
-								global $db;
-
-								$sql = "SELECT * FROM customer order by convert(name using gbk) ASC";
-
-								$results = $db->query($sql);
-									while ($fs = $db->fetch_array($results)){
-									?>
-									<option value="<?php echo $fs['0'];?>"><?php echo $fs['1'];?></option>
-									<?php
-								} ?>
-
+                                    {foreach $customer as $key=>$vo }
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                    {/foreach}
 								</select>
 
 
