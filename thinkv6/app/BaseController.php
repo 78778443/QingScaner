@@ -47,7 +47,7 @@ abstract class BaseController
     {
         $this->app     = $app;
         $this->request = $this->app->request;
-        View::assign('soft_name','ThinkPHP');
+        View::assign('soft_name','QingScanner');
         View::assign('username',Session::get('username'));
         // 控制器初始化
         $this->initialize();

@@ -795,7 +795,7 @@ class Index extends BaseController
         $data['scan_index'] = $this->scan_index();
         $data['info_index'] = $this->info_index();
         $data['spider_index'] = $this->spider_index();
-
+        $data['customer']= Customer::getCustomer();
 
         return View::fetch('html/index', $data);
     }
