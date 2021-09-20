@@ -5,7 +5,7 @@ global $db;
 $sql = "select * from spider where check_status='new' or check_status='ing'";
 
 $results = $db->query($sql);
-if (mysql_num_rows($results) > 0){
+if (mysqli_num_rows($results) > 0){
     $i = 1;
     while ($fs = $db->fetch_array($results))
     {
@@ -35,7 +35,7 @@ if (mysql_num_rows($results) > 0){
             $sql1 = "select url_all,url from spider where hash = '$hash'";
             $results1 = $db->query($sql1);
             echo $hash."<br>";
-            if (mysql_num_rows($results1) > 0){
+            if (mysqli_num_rows($results1) > 0){
                 while ($fs1 = $db->fetch_array($results1)){
                     echo $fs1[1]."<br>".$fs1[0];
                     if ($fs1[0] = '<br>'){

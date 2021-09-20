@@ -5,7 +5,7 @@ $sql = "select * from info where status='new' or status='ing'";
 #$sql = "select * from info where hash = '83c8d07b99c516c1f05abd2e408984f0'";
 
 $results = $db->query($sql);
-if (mysql_num_rows($results) > 0){
+if (mysqli_num_rows($results) > 0){
     $i = 1;
     while ($fs = $db->fetch_array($results))
     {

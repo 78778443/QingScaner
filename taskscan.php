@@ -12,7 +12,7 @@ global $db;
 
 $sql = "select * from scan_list LEFT JOIN target_info ON scan_list.hash = target_info.hash";
 $results = $db->query($sql);
-if (mysql_num_rows($results) > 0){
+if (mysqli_num_rows($results) > 0){
     $i = 1;
     while ($fs = $db->fetch_array($results))
     {

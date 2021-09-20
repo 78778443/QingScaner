@@ -23,7 +23,7 @@ $db = new Mysql($cfg['db_host'],$cfg['db_user'],$cfg['db_pass'],$cfg['db_name'],
     $sql = "SELECT * FROM valid_ip order by score desc";
     $results = $db->query($sql);
 
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         $i = 1;
         while ($fs = $db->fetch_array($results))
         {
