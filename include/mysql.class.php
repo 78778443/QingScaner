@@ -24,9 +24,9 @@ class mysql{
 	//数据库连接
 	private function connect()
 	{
-		$this->conn = mysql_connect($this->db_host,$this->db_user,$this->db_pass) or die("数据库连接错误");
-		MySQL_query("SET NAMES 'UTF8'");
-		mysql_select_db($this->db_database,$this->conn) or die("没有找到".$this->db_database."这个数据库");
+		$this->conn = mysqli_connect($this->db_host,$this->db_user,$this->db_pass) or die("数据库连接错误");
+		mysqli_query($this->conn,"SET NAMES 'UTF8'");
+		mysqli_select_db($this->conn,$this->db_database) or die("没有找到".$this->db_database."这个数据库");
 
 	}
 
@@ -34,7 +34,7 @@ class mysql{
 	function query($sql)
 	{
 		$sql = str_replace("##_",$this->db_pre,$sql);
-		$result = mysql_query($sql,$this->conn);
+		$result = mysqli_query($this->conn,$sql);
 		if (!$result) {
 			//调用中使用SQL语句出错时，会自动打印出来
 			//echo "<font color=red>SQL语句错误：$sql</font><br>";
@@ -49,13 +49,13 @@ class mysql{
 	function fetch_array($result = null)
 	{
 		$result = $result == null ? $this->result : $result;
-		return mysql_fetch_array($result);
+		return mysqli_fetch_array($result);
 	}
 	
 	function fetch_row($result = null)
 	{
 		$result = $result == null ? $this->result : $result;
-		return mysql_fetch_row($result);//mysql_fetch_array($result);
+		return mysqli_fetch_row($result);//mysqli_fetch_array($result);
 	}
 	/**
 	 *根据select查询结果计算结果集条数
@@ -64,7 +64,7 @@ class mysql{
 	{
 		$result=$this->query($sql);
 		if(empty($result)) $result=0;
-		return mysql_num_rows($result);
+		return mysqli_num_rows($result);
 	}
 
 	//查询一个表下所有的字段
@@ -89,7 +89,7 @@ class mysql{
         $sql="INSERT INTO ".$table." ($filed) VALUES ($val)";//拼成SQL语句
 //        print $sql;
 		$this->query($sql);
-		return mysql_insert_id();
+		return mysqli_insert_id();
 	}
 
 	/**
@@ -99,7 +99,7 @@ class mysql{
 	{
 		$res = $this->query ( $sql );
 		if ($res !== false) {
-			return mysql_fetch_assoc ( $res );
+			return mysqli_fetch_assoc ( $res );
 		} else {
 			return false;
 		}
@@ -109,7 +109,7 @@ class mysql{
 	{
 		$res = $this->query ( $sql );
 		if ($res !== false) {
-			return mysql_fetch_assoc ( $res );
+			return mysqli_fetch_assoc ( $res );
 		} else {
 			return false;
 		}
@@ -144,22 +144,22 @@ class mysql{
     //获得错误描述
     function GetError()
     {
-        $str = mysql_error();
+        $str = mysqli_error();
         return $str;
     }
 	function free_result($query) {
-		return @mysql_free_result($query);
+		return @mysqli_free_result($query);
 	}
 	function escape_string($str){
-		return mysql_escape_string($str);
+		return mysqli_escape_string($str);
 	}
 	//获取字段数
 	function num_fields($query) {
-		return mysql_num_fields($query);
+		return mysqli_num_fields($query);
 	}
 	//获取数据库版本
 	function version() {
-		return mysql_get_server_info($this->conn);
+		return mysqli_get_server_info($this->conn);
 	}
 	//删除数据库
 	function delete($where)
@@ -188,7 +188,7 @@ class mysql{
 	function Getaffected($sql)
 	{
 		$this->query($sql);
-		$rc = mysql_affected_rows();
+		$rc = mysqli_affected_rows();
 		return $rc;
 	}
 	/**

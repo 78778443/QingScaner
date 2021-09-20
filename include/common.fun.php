@@ -543,7 +543,7 @@ function get_severity($hash,$severity) {
 	
 	$sql = "SELECT * FROM target_vul where hash='{$hash}' and Severity='{$severity}' order by Severity";
 	$results = $db->query($sql);
-	return mysql_num_rows($results);
+	return mysqli_num_rows($results);
 }
 function get_vul_cn_name($id) {
     global $db;
@@ -562,7 +562,7 @@ function get_vul_cn_id($name) {
     //echo $sql;
 
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         $fs = $db->fetch_array($results);}
     else{
         $sql = "SELECT id  FROM vul_cn where name_en like '%{$name}%'";
@@ -606,7 +606,7 @@ function point_display() {
 	$sql = "SELECT * FROM point_server";
 	
 	$results = $db->query($sql);
-	if (mysql_num_rows($results) > 0){
+	if (mysqli_num_rows($results) > 0){
 		while ($fs = $db->fetch_array($results))
 		{
 			$ip = $fs["pointip"];
@@ -652,7 +652,7 @@ function customer_display() {
     $sql = "SELECT * FROM customer";
 
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
             $id = $fs["0"];
@@ -750,7 +750,7 @@ function scan_display() {
     $sql = "SELECT * FROM scan_list LEFT JOIN  customer ON scan_list.customer = customer.id order by createtime desc";
 
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
             $url = $fs["url"];
@@ -859,7 +859,7 @@ function info_display() {
     $sql = "SELECT * FROM info LEFT JOIN  customer ON info.customer = customer.id order by info.id";
 
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
 
@@ -934,7 +934,7 @@ function set_display() {
 	$sql = "SELECT * FROM user";
 	
 	$results = $db->query($sql);
-	if (mysql_num_rows($results) > 0){
+	if (mysqli_num_rows($results) > 0){
 		while ($fs = $db->fetch_array($results))
 		{
 			$username = $fs["username"];
@@ -1273,7 +1273,7 @@ function export111()
         $xls -> addHead($title2,'vulnerability');
         $sql = "SELECT * FROM target_vul where hash='{$hash}' order by Severity";
         $results = $db->query($sql);
-        if (mysql_num_rows($results) > 0){
+        if (mysqli_num_rows($results) > 0){
             $i = 1;
             while ($fs = $db->fetch_array($results))
             {

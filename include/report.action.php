@@ -12,7 +12,7 @@ function report_url(){
     $sql = "select url from scan_list where hash ='$hash'";
 //            echo $sql1;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
             return $fs[0];
@@ -28,7 +28,7 @@ function report_title(){
     $sql = "select title from info where hash ='$hash'";
 //            echo $sql1;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
             return $fs[0];
@@ -44,7 +44,7 @@ function report_ip(){
     $sql = "select ip from info where hash ='$hash'";
 //            echo $sql1;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         while ($fs = $db->fetch_array($results))
         {
             return $fs[0];
@@ -73,7 +73,7 @@ function report_general(){
     $sql = "SELECT * FROM info LEFT JOIN  spider ON spider.hash = info.hash where info.hash ='$hash' ";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         $i = 1;
         while ($fs = $db->fetch_array($results)) {
             $id = $i;
@@ -199,7 +199,7 @@ function report_vul(){
 
     $sql = "SELECT * FROM target_vul where hash='{$hash}' and severity='high' union all SELECT * FROM target_vul where hash='{$hash}' and severity='medium' union all SELECT * FROM target_vul where hash='{$hash}' and severity='low'";;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0) {
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
         while ($fs = $db->fetch_array($results)) {
             $id = $i;
@@ -436,7 +436,7 @@ function report_spider(){
     $sql = "SELECT * FROM spider  LEFT JOIN info ON info.hash = spider.hash where spider.hash = '$hash'";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0){
         $i = 1;
 
         while ($fs = $db->fetch_array($results))
@@ -681,7 +681,7 @@ function report_info()
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM info where hash = '$hash'";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0) {
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
 
         while ($fs = $db->fetch_array($results)) {

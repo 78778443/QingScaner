@@ -1,59 +1,59 @@
 <?php
 
-function scan_index() {
+function scan_index()
+{
     global $db;
 
     //print_r($_POST);
     $sql = "SELECT * FROM scan_list INNER JOIN  customer ON scan_list.customer = customer.id  INNER JOIN info ON  scan_list.hash = info.hash  order by rand() DESC LIMIT 5";
     $results = $db->query($sql);
 //    print $sql;
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
-			$url = substr($fs["1"],0,35);
+            $url = substr($fs["1"], 0, 35);
             $link_url = $fs["1"];
             $customer = $fs["name"];
             $pointserver = $fs["4"];
             $status = $fs["10"];
             $hash = $fs["11"];
             $finishtime = $fs["finishtime"];
-            $finishtime = explode(',',$finishtime)[0];
+            $finishtime = explode(',', $finishtime)[0];
 
-            $banner = substr($fs["cms"],0,18);
+            $banner = substr($fs["cms"], 0, 18);
             //$responsive = $fs["responsive"];
             //$technologies = $fs["technologies"];
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
             $high = $fs["high"];
             $medium = $fs["medium"];
-            $low =  $fs["low"];
+            $low = $fs["low"];
             $delay = $fs["13"];
-            $title = mb_substr($fs["title"],0,8,"utf-8");
+            $title = mb_substr($fs["title"], 0, 8, "utf-8");
 
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
             }
 
-            if ($delay == '1'){
+            if ($delay == '1') {
                 $scan_delay = "每月一次";
-            }else if ($delay == '2'){
+            } else if ($delay == '2') {
                 $scan_delay = "每季度一次";
-            }else if ($delay == '3'){
+            } else if ($delay == '3') {
                 $scan_delay = "每半年一次";
-            }else if ($delay == '4'){
+            } else if ($delay == '4') {
                 $scan_delay = "仅一次";
-            }else{
+            } else {
                 $scan_delay = "仅一次";
             }
 
@@ -100,32 +100,32 @@ function scan_index() {
 											<a href=\"?m=vul&p={$hash}\">详情</a>|<a href=\"javascript:del('{$hash}')\">删除</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function spider_index() {
+function spider_index()
+{
     global $db;
 
     $sql = "SELECT * FROM spider INNER JOIN  customer ON spider.customer = customer.id order by rand() LIMIT 5";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
-			$url = substr($fs["1"],0,40);
+            $url = substr($fs["1"], 0, 40);
             $link_url = $fs["1"];
             $customer = $fs["name"];
             $status = $fs["status"];
             $hash = $fs["hash"];
-            $url_num= $fs["url_num"];
+            $url_num = $fs["url_num"];
             $act_num = $fs["act_num"];
             $key_num = $fs["key_num"];
             $bad_num = $fs["bad_num"];
@@ -135,30 +135,30 @@ function spider_index() {
             $finishtime = $fs["finishtime"];
 
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "爬取中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
                 $responsive = "队列中";
             }
 
 
-            if ($delay == '1'){
+            if ($delay == '1') {
                 $scan_delay = "每月一次";
-            }else if ($delay == '2'){
+            } else if ($delay == '2') {
                 $scan_delay = "每季度一次";
-            }else if ($delay == '3'){
+            } else if ($delay == '3') {
                 $scan_delay = "每半年一次";
-            }else if ($delay == '4'){
+            } else if ($delay == '4') {
                 $scan_delay = "仅一次";
-            }else{
+            } else {
                 $scan_delay = "仅一次";
             }
 
@@ -206,42 +206,42 @@ function spider_index() {
 											<a href=\"?m=spiderinfo&p={$hash}\">详情</a>|<a href=\"?m=vul&p={$hash}\">扫描</a>|<a href=\"?m=siteinfo&p={$hash}\">信息</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function info_index() {
+function info_index()
+{
     global $db;
 
     $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id order by rand()  LIMIT 5";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $cus_id = $fs["customer"];
-            $url = substr($fs["1"],0,30);
-			$link_url = $fs["1"];
+            $url = substr($fs["1"], 0, 30);
+            $link_url = $fs["1"];
             $hash = $fs["2"];
             $ip = $fs["ip"];
             $customer = $fs["name"];
             $port_num = $fs["port_num"];
             $sub_num = $fs["sub_num"];
-            $cms = mb_substr($fs["cms"],0,8,"utf-8");
-            $waf = substr($fs["waf"],0,8);;
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
-            $language = substr($fs["language"],0,12);
-            $middleware = substr($fs["middleware"],0,18);
+            $cms = mb_substr($fs["cms"], 0, 8, "utf-8");
+            $waf = substr($fs["waf"], 0, 8);;
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
+            $language = substr($fs["language"], 0, 12);
+            $middleware = substr($fs["middleware"], 0, 18);
             $weakfile_num = $fs["weakfile_num"];
             $other = $fs["other"];
-            $title = mb_substr($fs["title"],0,8,"utf-8");
+            $title = mb_substr($fs["title"], 0, 8, "utf-8");
             $class = 'success';
 
 
@@ -290,27 +290,28 @@ function info_index() {
                                             <a href=\"?m=siteinfo&p={$hash}\">详情</a>|<a href=\"javascript:delinfo('{$hash}')\">删除</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
                                         </td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
     }
 }
 
 
-function search() {
+function search()
+{
     global $db;
 
     //print_r($_POST);
     $action = $_GET['c'];
 
 
-    if ($action == 'search'){
+    if ($action == 'search') {
 
         $i = 1;
-        if(!empty($_POST['os']) or !empty($_POST['title']) or !empty($_POST['port'])  or !empty($_POST['middleware']) or !empty($_POST['cms']) or !empty($_POST['language'])){
+        if (!empty($_POST['os']) or !empty($_POST['title']) or !empty($_POST['port']) or !empty($_POST['middleware']) or !empty($_POST['cms']) or !empty($_POST['language'])) {
 
             $os = $_POST['os'];
             $middleware = $_POST['middleware'];
@@ -320,19 +321,18 @@ function search() {
             $port = $_POST['port'];
             $sql1 = "select hash from info where language like '%$language%' and cms like '%$cms%' and port like '%$port%' and title like '%$title%' and middleware like '%$middleware%' and os like '%$os%'";
             $results1 = $db->query($sql1);
-            if (mysql_num_rows($results1) > 0){
-                while ($fs = $db->fetch_array($results1))
-                {
+            if (mysqli_num_rows($results1) > 0) {
+                while ($fs = $db->fetch_array($results1)) {
 
                     $in_arr[$i] = $fs["0"];
 //                    echo $in_arr[$i].'---';
-                    $i = $i+1;
+                    $i = $i + 1;
                 }
-                }
+            }
 //            echo "<script>alert('info');</script>";
         }
 
-        if(!empty($_POST['url']) or !empty($_POST['name']) or !empty($_POST['customer']) or !empty($_POST['delay'])){
+        if (!empty($_POST['url']) or !empty($_POST['name']) or !empty($_POST['customer']) or !empty($_POST['delay'])) {
 
             $url = $_POST['url'];
             $name = $_POST['name'];
@@ -340,13 +340,12 @@ function search() {
             $delay = $_POST['delay'];
             $sql2 = "select hash from scan_list where url like '%$url%' and customer like '%$customer%' and delay like '%$delay%'";
             $results2 = $db->query($sql2);
-            if (mysql_num_rows($results2) > 0){
-                while ($fs = $db->fetch_array($results2))
-                {
+            if (mysqli_num_rows($results2) > 0) {
+                while ($fs = $db->fetch_array($results2)) {
 
                     $in_arr[$i] = $fs["0"];
 //                    echo $in_arr[$i].'+++';
-                    $i = $i+1;
+                    $i = $i + 1;
                 }
             }
 //            echo "<script>alert('info');</script>";
@@ -354,92 +353,91 @@ function search() {
         $in_arr = array_unique($in_arr);
         $a = '';
 
-        foreach ($in_arr as $in){
+        foreach ($in_arr as $in) {
 
 //            echo '***'.$in.'***';
-            $a = $a.$in;
+            $a = $a . $in;
         }
         echo "<script>location.href='?m=search&hash=$a'</script>";
         //return $in_arr;
-        }elseif ($action == 'spider'){
+    } elseif ($action == 'spider') {
 
         $i = 1;
-            $url = $_POST['url'];
-            $customer = $_POST['customer'];
-            $url_key = $_POST['url_key'];
+        $url = $_POST['url'];
+        $customer = $_POST['customer'];
+        $url_key = $_POST['url_key'];
 
-            $sql1 = "select hash from spider where url like '%$url%' and customer like '%$customer%' and url_all like '%$url_key%'";
+        $sql1 = "select hash from spider where url like '%$url%' and customer like '%$customer%' and url_all like '%$url_key%'";
 //            echo $sql1;
-            $results1 = $db->query($sql1);
-            if (mysql_num_rows($results1) > 0){
-                while ($fs = $db->fetch_array($results1))
-                {
+        $results1 = $db->query($sql1);
+        if (mysqli_num_rows($results1) > 0) {
+            while ($fs = $db->fetch_array($results1)) {
 
-                    $in_arr[$i] = $fs["0"];
+                $in_arr[$i] = $fs["0"];
 //                    echo $in_arr[$i].'---';
-                    $i = $i+1;
-                }
-            }else{
-                $in_arr='';
+                $i = $i + 1;
             }
+        } else {
+            $in_arr = '';
+        }
         $in_arr = array_unique($in_arr);
         $a = '';
-        foreach ($in_arr as $in){
+        foreach ($in_arr as $in) {
 
 //            echo '***'.$in.'***';
-            $a = $a.$in;
+            $a = $a . $in;
         }
         echo "<script>location.href='?m=spidersearch&key=$url_key&hash=$a'</script>";
         //return $in_arr;
     }
 }
 
-function search_center() {
+function search_center()
+{
     global $db;
 
 
     $hashs = $_GET['hash'];
     $hash = '';
-    $a = strlen($hashs)/32;
-    while ($a >= 1){
-        $x = substr($hashs,($a-1)*32,32);
-        $a = $a -1;
-        $hash = $hash.$x."','";
+    $a = strlen($hashs) / 32;
+    while ($a >= 1) {
+        $x = substr($hashs, ($a - 1) * 32, 32);
+        $a = $a - 1;
+        $hash = $hash . $x . "','";
     }
-    $hash = "'".substr($hash,0,-2);
+    $hash = "'" . substr($hash, 0, -2);
 
 
     $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id  INNER JOIN  spider ON spider.hash = info.hash where info.hash in ($hash) order by info.id desc";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $cus_id = $fs["customer"];
-            $url = substr($fs["1"],0,28);
-			$link_url = $fs["1"];
+            $url = substr($fs["1"], 0, 28);
+            $link_url = $fs["1"];
             $hash = $fs["2"];
             $ip = $fs["ip"];
             $customer = $fs["name"];
             $port_num = $fs["port_num"];
             $sub_num = $fs["sub_num"];
-            $cms = mb_substr($fs["cms"],0,8,"utf-8");
-            $waf = substr($fs["waf"],0,8);
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
-            $language = substr($fs["language"],0,12);
-            $middleware = substr($fs["middleware"],0,13);
+            $cms = mb_substr($fs["cms"], 0, 8, "utf-8");
+            $waf = substr($fs["waf"], 0, 8);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
+            $language = substr($fs["language"], 0, 12);
+            $middleware = substr($fs["middleware"], 0, 13);
             $weakfile_num = $fs["weakfile_num"];
-            $high = get_severity($hash,'high');
-            $medium = get_severity($hash,'medium');
-            $low = get_severity($hash,'low');
+            $high = get_severity($hash, 'high');
+            $medium = get_severity($hash, 'medium');
+            $low = get_severity($hash, 'low');
 
             $key_num = $fs["key_num"];
             $bad_num = $fs["bad_num"];
             $evil_num = $fs["evil_num"];
 
-            $title = mb_substr($fs["title"],0,10,"utf-8");
+            $title = mb_substr($fs["title"], 0, 10, "utf-8");
             $class = 'success';
 
             $html_str .= "
@@ -497,31 +495,32 @@ function search_center() {
                                             <a href=\"javascript:resetall('{$hash}')\">重置</a>|<a href=\"javascript:delall('{$hash}')\">删除</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
                                         </td>
                                     </tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function manager() {
+function manager()
+{
     global $db;
     $action = $_GET['c'];
     $in_arr = '';
     $in_arr_spider = '';
     $in_arr_info = '';
 
-    if ($action == 'new'){
+    if ($action == 'new') {
 
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
             $pointserver = specify_server();
-            if (!empty($pointserver)){
+            if (!empty($pointserver)) {
                 $urls = str_replace(array("\r\n", "\r"), "\n", $_POST['url']);
-                $urls = explode("\n",$urls);
-                foreach ($urls as $url){
+                $urls = explode("\n", $urls);
+                foreach ($urls as $url) {
                     $in_arr['url'] = $url;
                     $in_arr['createtime'] = date('Y-m-d');
                     $in_arr['user'] = $_SESSION['username'];//当前session用户
@@ -534,10 +533,10 @@ function manager() {
                     $in_arr['status'] = 'new';
                     $in_arr['customer'] = $_POST['customer'];
                     $in_arr['delay'] = $_POST['delay'];
-                    $in_arr['hash'] = md5($in_arr['url'].time().authkey);
+                    $in_arr['hash'] = md5($in_arr['url'] . time() . authkey);
 
                     #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
-                    $insert = $db->insert_into("scan_list",$in_arr);
+                    $insert = $db->insert_into("scan_list", $in_arr);
 
                     $in_arr_spider['url'] = $url;
                     $in_arr_spider['createtime'] = date('Y-m-d');
@@ -549,7 +548,7 @@ function manager() {
                     $in_arr_spider['delay'] = $_POST['delay'];
                     $in_arr_spider['hash'] = $in_arr['hash'];
 
-                    $insert = $db->insert_into("spider",$in_arr_spider);
+                    $insert = $db->insert_into("spider", $in_arr_spider);
 
                     $in_arr_info['url'] = $url;
                     $in_arr_info['createtime'] = date('Y-m-d');
@@ -557,45 +556,43 @@ function manager() {
                     $in_arr_info['customer'] = $_POST['customer'];
                     $in_arr_info['hash'] = $in_arr['hash'];
 
-                    $insert = $db->insert_into("info",$in_arr_info);
+                    $insert = $db->insert_into("info", $in_arr_info);
                 }
 
                 echo "<script>location.href='?m=manager'</script>";
                 exit(0);
 
-            }else{
-                Message(" 请配置节点服务器 ","?m=point",0,3000);
-            }}
+            } else {
+                Message(" 请配置节点服务器 ", "?m=point", 0, 3000);
+            }
+        }
     }
 
     $sql_num = "SELECT id FROM info";
     $totalnum = $db->db_num_rows($sql_num);
-    $pagesize=50;
+    $pagesize = 50;
     //总共有几页
-    $maxpage=ceil($totalnum/$pagesize);
-    $page=isset($_GET['page'])?$_GET['page']:1;
-    if($page <1)
-    {
-        $page=1;
+    $maxpage = ceil($totalnum / $pagesize);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page < 1) {
+        $page = 1;
     }
-    if($page>$maxpage)
-    {
-        $page=$maxpage;
+    if ($page > $maxpage) {
+        $page = $maxpage;
     }
-    $limit=" limit ".($page-1)*$pagesize.",$pagesize";
+    $limit = " limit " . ($page - 1) * $pagesize . ",$pagesize";
 
     //$sql = "SELECT * FROM info LEFT JOIN  customer ON info.customer = customer.id  LEFT JOIN  spider ON spider.hash = info.hash  LEFT JOIN  scan_list ON scan_list.hash = info.hash order by info.id DESC {$limit}";
     $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id  INNER JOIN  spider ON spider.hash = info.hash  INNER JOIN  scan_list ON scan_list.hash = info.hash order by info.id DESC {$limit}";
 
     //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $cus_id = $fs["customer"];
-            $url = substr($fs["1"],0,28);
+            $url = substr($fs["1"], 0, 28);
             $link_url = $fs["1"];
             $hash = $fs["2"];
             $ip = $fs["ip"];
@@ -603,32 +600,32 @@ function manager() {
             $customer = $fs["name"];
             $port_num = $fs["port_num"];
             $sub_num = $fs["sub_num"];
-            $cms = mb_substr($fs["cms"],0,8,"utf-8");
-            $waf = substr($fs["waf"],0,8);
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
-            $language = substr($fs["language"],0,12);
-            $middleware = substr($fs["middleware"],0,12);
+            $cms = mb_substr($fs["cms"], 0, 8, "utf-8");
+            $waf = substr($fs["waf"], 0, 8);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
+            $language = substr($fs["language"], 0, 12);
+            $middleware = substr($fs["middleware"], 0, 12);
             $weakfile_num = $fs["weakfile_num"];
             $high = $fs["high"];
             $medium = $fs["medium"];
-            $low =  $fs["low"];
+            $low = $fs["low"];
 
             $key_num = $fs["key_num"];
             $bad_num = $fs["bad_num"];
             $evil_num = $fs["evil_num"];
 
-            $title = mb_substr($fs["title"],0,10,"utf-8");
+            $title = mb_substr($fs["title"], 0, 10, "utf-8");
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
             }
 
@@ -689,32 +686,32 @@ function manager() {
                                         </td>
                                     </tr>";
 
-            $i ++;
+            $i++;
         }
-        $html_str =$html_str."<table class=\"table\" style=\"font-size:14px;\"><thead>
+        $html_str = $html_str . "<table class=\"table\" style=\"font-size:14px;\"><thead>
 								<tr><td style=\"text-align:center\"><b>当前{$page}/{$maxpage}页 &nbsp;&nbsp;&nbsp;共{$totalnum}个项目  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href='?m=manager&page=1'>首页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=manager&page=".($page-1)."'>上一页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=manager&page=".($page+1)."'>下一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=manager&page=" . ($page - 1) . "'>上一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=manager&page=" . ($page + 1) . "'>下一页</a> &nbsp;&nbsp;&nbsp;
                    <a href='?m=manager&page={$maxpage}'>尾页</a></b>
                                        </td></tr></thead>\r\n";
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function index() {
+function index()
+{
     global $db;
 
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM scan_list INNER JOIN target_info ON scan_list.hash = target_info.hash order by createtime desc";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $url = $fs["1"];
             $user = $fs["3"];
@@ -728,18 +725,18 @@ function index() {
             $os = $fs["19"];
             $high = $fs["high"];
             $medium = $fs["medium"];
-            $low =  $fs["low"];
+            $low = $fs["low"];
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'ing';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'new';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = '';
             }
 
@@ -782,26 +779,26 @@ function index() {
 											<a href=\"?m=info&p={$hash}\">详情</a>|<a href=\"?m=edit&p={$hash}\">编辑</a>|<a href=\"javascript:del('{$hash}')\">删除</a>|<a href=\"javascript:exportexcel('{$hash}')\">报告</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return "";
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function pro() {
+function pro()
+{
     global $db;
 
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM plugins order by id desc";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $name = $fs["name"];
             $describe = $fs["describe"];
@@ -812,16 +809,16 @@ function pro() {
             $hash = '11';
 
 
-            if ($type == '1'){
+            if ($type == '1') {
                 $class = 'warning';
                 $type = "通用插件";
-            }else if ($type == '2'){
+            } else if ($type == '2') {
                 $class = 'info';
                 $type = "爬虫插件";
-            }else if ($type == '3'){
+            } else if ($type == '3') {
                 $class = 'error';
                 $type = "POC插件";
-            }else{
+            } else {
                 $class = 'ing';
                 $type = "其他插件";
             }
@@ -851,24 +848,25 @@ function pro() {
 											<a href=\"?m=info&p={$hash}\">详情</a>|<a href=\"?m=edit&p={$hash}\">编辑</a>|<a href=\"javascript:delpro('{$hash}')\">删除</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function customer() {
+function customer()
+{
     global $db;
     $action = $_GET['c'];
 
-    if ($action == 'new'){
+    if ($action == 'new') {
         //新添加
         #print_r($_POST);
-        if(!empty($_POST['name'])){
+        if (!empty($_POST['name'])) {
 
             $in_arr['name'] = $_POST['name'];
             $in_arr['contact'] = $_POST['contact'];
@@ -883,14 +881,14 @@ function customer() {
             $in_arr['ctime'] = time();
 
 
-            $insert = $db->insert_into("customer",$in_arr);
+            $insert = $db->insert_into("customer", $in_arr);
             echo "<script>alert('添加成功');location.href='?m=customer'</script>";
 
         }
-    }else if ($action == 'update'){
+    } else if ($action == 'update') {
         //更新
         //print_r($_POST);
-        if(!empty($_POST['name'])){
+        if (!empty($_POST['name'])) {
             $in_arr['id'] = $_GET['id'];
 
 
@@ -905,7 +903,7 @@ function customer() {
             $in_arr['delay'] = $_POST['delay'];
             $in_arr['remark'] = $_POST['remark'];
 
-            $update = $db->update("customer",$in_arr,"id='{$in_arr['id']}'");
+            $update = $db->update("customer", $in_arr, "id='{$in_arr['id']}'");
             echo "<script>alert('更新成功');location.href='?m=customer'</script>";
 
         }
@@ -915,10 +913,9 @@ function customer() {
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM customer  order by id asc";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $fs["0"];
             $name = $fs["1"];
 
@@ -938,32 +935,32 @@ function customer() {
             $remark = $fs["10"];
 
 
-            if ($delay == '1'){
+            if ($delay == '1') {
                 $class = 'success';
                 $scan_delay = "每月一次";
-            }else if ($delay == '2'){
+            } else if ($delay == '2') {
                 $class = 'warning';
                 $scan_delay = "每季度一次";
-            }else if ($delay == '3'){
+            } else if ($delay == '3') {
                 $class = 'error';
                 $scan_delay = "每半年一次";
-            }else if ($delay == '4'){
+            } else if ($delay == '4') {
                 $class = 'info';
                 $scan_delay = "仅一次";
-            }else{
+            } else {
                 $class = 'info';
                 $scan_delay = "仅一次";
             }
 
-            if ($type == '1'){
+            if ($type == '1') {
                 $scan_type = "定扫+预警+敏检";
-            }else if ($type == '2'){
+            } else if ($type == '2') {
                 $scan_type = "预警+敏检";
-            }else if ($type == '3'){
+            } else if ($type == '3') {
                 $scan_type = "定扫+预警";
-            }else if ($type == '4'){
+            } else if ($type == '4') {
                 $scan_type = "预警";
-            }else{
+            } else {
                 $scan_type = "定扫+预警+敏检";
             }
             $hash = "111";
@@ -1006,25 +1003,26 @@ function customer() {
 											<a href=\"?m=cusinfo&id={$id}\">详情</a>|<a id=\"modal - 978241\" href=\"#$id\" role=\"button\"  data-toggle=\"modal\" >编辑</a>|<a href=\"javascript:delcustomer('{$id}')\">删除</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function guestadd() {
+function guestadd()
+{
     global $db;
 
     //print_r($_POST);
 
-    if(!empty($_POST['url'])){
+    if (!empty($_POST['url'])) {
 
         $pointserver = specify_server();
-        if (!empty($pointserver)){
+        if (!empty($pointserver)) {
 
             $in_arr['url'] = $_POST['url'];
             $in_arr['createtime'] = date('Y-m-d');
@@ -1036,150 +1034,149 @@ function guestadd() {
             $in_arr['cookie'] = $_POST['cookie'];
             $in_arr['rule'] = $_POST['rule'];
             $in_arr['status'] = 'new';
-            $in_arr['hash'] = md5($in_arr['url'].time().authkey);
+            $in_arr['hash'] = md5($in_arr['url'] . time() . authkey);
 
             #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
 
-            $insert = $db->insert_into("scan_list",$in_arr);
+            $insert = $db->insert_into("scan_list", $in_arr);
 
-        }else{
-            Message(" 请配置节点服务器 ","?m=point",0,3000);
+        } else {
+            Message(" 请配置节点服务器 ", "?m=point", 0, 3000);
         }
     }
 }
 
-function scan() {
-	global $db;
-	
-	//print_r($_POST);
+function scan()
+{
+    global $db;
+
+    //print_r($_POST);
     $action = $_GET['c'];
 
-    if ($action == 'new'){
+    if ($action == 'new') {
 
-	if(!empty($_POST['url'])){
-		
-		$pointserver = specify_server();
-		if (!empty($pointserver)){
-			$urls = str_replace(array("\r\n", "\r"), "\n", $_POST['url']);  
+        if (!empty($_POST['url'])) {
 
-            $urls = explode("\n",$urls);
-            foreach ($urls as $url){
-                $in_arr['url'] = $url;
-                $in_arr['createtime'] = date('Y-m-d');
-                $in_arr['user'] = $_SESSION['username'];//当前session用户
-                $in_arr['pointserver'] = specify_server();//分配节点服务器ip
-                $in_arr['group'] = "";//项目组名称
-                $in_arr['siteuser'] = $_POST['user'];
-                $in_arr['sitepwd'] = $_POST['pwd'];
-                $in_arr['cookie'] = $_POST['cookie'];
-                $in_arr['rule'] = $_POST['rule'];
-                $in_arr['status'] = 'new';
-                $in_arr['customer'] = $_POST['customer'];
-                $in_arr['delay'] = $_POST['delay'];
-                $in_arr['hash'] = md5($in_arr['url'].time().authkey);
+            $pointserver = specify_server();
+            if (!empty($pointserver)) {
+                $urls = str_replace(array("\r\n", "\r"), "\n", $_POST['url']);
 
-                #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
+                $urls = explode("\n", $urls);
+                foreach ($urls as $url) {
+                    $in_arr['url'] = $url;
+                    $in_arr['createtime'] = date('Y-m-d');
+                    $in_arr['user'] = $_SESSION['username'];//当前session用户
+                    $in_arr['pointserver'] = specify_server();//分配节点服务器ip
+                    $in_arr['group'] = "";//项目组名称
+                    $in_arr['siteuser'] = $_POST['user'];
+                    $in_arr['sitepwd'] = $_POST['pwd'];
+                    $in_arr['cookie'] = $_POST['cookie'];
+                    $in_arr['rule'] = $_POST['rule'];
+                    $in_arr['status'] = 'new';
+                    $in_arr['customer'] = $_POST['customer'];
+                    $in_arr['delay'] = $_POST['delay'];
+                    $in_arr['hash'] = md5($in_arr['url'] . time() . authkey);
 
-                $insert = $db->insert_into("scan_list",$in_arr);
+                    #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
+
+                    $insert = $db->insert_into("scan_list", $in_arr);
+                }
+
+                echo "<script>alert('添加成功');location.href='?m=scan'</script>";
+
+
+            } else {
+                Message(" 请配置节点服务器 ", "?m=point", 0, 3000);
             }
-
-            echo "<script>alert('添加成功');location.href='?m=scan'</script>";
-
-
-
-        }else{
-            Message(" 请配置节点服务器 ","?m=point",0,3000);
-        }}
-	}else if ($action == 'update'){
+        }
+    } else if ($action == 'update') {
         //更新
         //print_r($_POST);
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
 
-        $in_arr['hash'] = $_GET['p'];
+            $in_arr['hash'] = $_GET['p'];
 
-        $in_arr['url'] = $_POST['url'];
+            $in_arr['url'] = $_POST['url'];
 //        $in_arr['createtime'] = date('Y-m-d');
-        $in_arr['user'] = $_SESSION['username'];//当前session用户
-        $in_arr['pointserver'] = specify_server();//分配节点服务器ip
-        $in_arr['group'] = "";//项目组名称
-        $in_arr['siteuser'] = $_POST['user'];
-        $in_arr['sitepwd'] = $_POST['pwd'];
-        $in_arr['cookie'] = $_POST['cookie'];
-        $in_arr['rule'] = $_POST['rule'];
+            $in_arr['user'] = $_SESSION['username'];//当前session用户
+            $in_arr['pointserver'] = specify_server();//分配节点服务器ip
+            $in_arr['group'] = "";//项目组名称
+            $in_arr['siteuser'] = $_POST['user'];
+            $in_arr['sitepwd'] = $_POST['pwd'];
+            $in_arr['cookie'] = $_POST['cookie'];
+            $in_arr['rule'] = $_POST['rule'];
 //        $in_arr['status'] = 'new';
-        $in_arr['customer'] = $_POST['customer'];
-        $in_arr['delay'] = $_POST['delay'];
+            $in_arr['customer'] = $_POST['customer'];
+            $in_arr['delay'] = $_POST['delay'];
 
 
-        #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
+            #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
 
-        $insert = $db->update("scan_list",$in_arr,"hash='{$in_arr['hash']}'");
-        echo "<script>alert('更新成功');location.href='?m=scan'</script>";
+            $insert = $db->update("scan_list", $in_arr, "hash='{$in_arr['hash']}'");
+            echo "<script>alert('更新成功');location.href='?m=scan'</script>";
 
-        }}
+        }
+    }
 
     $sql_num = "SELECT id FROM scan_list";
     $totalnum = $db->db_num_rows($sql_num);
-    $pagesize=100;
+    $pagesize = 100;
     //总共有几页
-    $maxpage=ceil($totalnum/$pagesize);
-    $page=isset($_GET['page'])?$_GET['page']:1;
-    if($page <1)
-    {
-        $page=1;
+    $maxpage = ceil($totalnum / $pagesize);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page < 1) {
+        $page = 1;
     }
-    if($page>$maxpage)
-    {
-        $page=$maxpage;
+    if ($page > $maxpage) {
+        $page = $maxpage;
     }
-    $limit=" limit ".($page-1)*$pagesize.",$pagesize";
+    $limit = " limit " . ($page - 1) * $pagesize . ",$pagesize";
 
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM scan_list INNER JOIN  customer ON scan_list.customer = customer.id INNER JOIN info ON  scan_list.hash = info.hash order by scan_list.id DESC {$limit}";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
-            $url = substr($fs["1"],0,32);
-			$link_url = $fs["1"];
+            $url = substr($fs["1"], 0, 32);
+            $link_url = $fs["1"];
             $customer = $fs["name"];
-            $title = mb_substr($fs["title"],0,10,"utf-8");
+            $title = mb_substr($fs["title"], 0, 10, "utf-8");
             $status = $fs["10"];
             $hash = $fs["11"];
             $finishtime = $fs["finishtime"];
-            $finishtime = explode(',',$finishtime)[0];
-            $banner = substr($fs["cms"],0,18);
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
+            $finishtime = explode(',', $finishtime)[0];
+            $banner = substr($fs["cms"], 0, 18);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
             $high = $fs["high"];
             $medium = $fs["medium"];
-            $low =  $fs["low"];
+            $low = $fs["low"];
             $delay = $fs["13"];
 
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
             }
 
-            if ($delay == '1'){
+            if ($delay == '1') {
                 $scan_delay = "每月一次";
-            }else if ($delay == '2'){
+            } else if ($delay == '2') {
                 $scan_delay = "每季度一次";
-            }else if ($delay == '3'){
+            } else if ($delay == '3') {
                 $scan_delay = "每半年一次";
-            }else if ($delay == '4'){
+            } else if ($delay == '4') {
                 $scan_delay = "仅一次";
-            }else{
+            } else {
                 $scan_delay = "仅一次";
             }
 
@@ -1226,44 +1223,45 @@ function scan() {
 											<a href=\"javascript:resetscan('{$hash}')\">重置</a>|<a id=\"modal - 978241\" href=\"#$hash\" role=\"button\"  data-toggle=\"modal\" >编辑</a>|<a href=\"javascript:del('{$hash}')\">删除</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
-        $html_str =$html_str."<table class=\"table\" style=\"font-size:14px;\"><thead>
+        $html_str = $html_str . "<table class=\"table\" style=\"font-size:14px;\"><thead>
                                 <tr><td style=\"text-align:center\"><b>当前{$page}/{$maxpage}页 &nbsp;&nbsp;&nbsp;共{$totalnum}个项目  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href='?m=scan&page=1'>首页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=scan&page=".($page-1)."'>上一页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=scan&page=".($page+1)."'>下一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=scan&page=" . ($page - 1) . "'>上一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=scan&page=" . ($page + 1) . "'>下一页</a> &nbsp;&nbsp;&nbsp;
                    <a href='?m=scan&page={$maxpage}'>尾页</a></b>
                                        </td></tr></thead>\r\n";
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function info() {
+function info()
+{
     global $db;
 
     //print_r($_POST);
     $action = $_GET['c'];
 
-    if ($action == 'new'){
+    if ($action == 'new') {
 
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
 
 //            $urls = $_POST['url'];
-            $urls = explode("\n",$_POST['url']);
-            foreach ($urls as $url){
+            $urls = explode("\n", $_POST['url']);
+            foreach ($urls as $url) {
 //                $in_arr["url"] = $url;
 //                echo $url;
                 $in_arr['url'] = $url;
                 $in_arr['createtime'] = date('Y-m-d');
                 $in_arr['status'] = 'new';
                 $in_arr['customer'] = $_POST['customer'];
-                $in_arr['hash'] = md5($in_arr['url'].time().authkey);
-                $insert = $db->insert_into("info",$in_arr);
+                $in_arr['hash'] = md5($in_arr['url'] . time() . authkey);
+                $insert = $db->insert_into("info", $in_arr);
             }
 
 //            $in_arr['siteuser'] = $_POST['user'];
@@ -1271,10 +1269,11 @@ function info() {
 
             echo "<script>alert('添加成功');location.href='?m=info'</script>";
 
-        }}else if ($action == 'update'){
+        }
+    } else if ($action == 'update') {
         //更新
         //print_r($_POST);
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
 
             $in_arr['hash'] = $_GET['p'];
             $in_arr['customer'] = $_POST['customer'];
@@ -1286,63 +1285,61 @@ function info() {
             $in_arr['language'] = $_POST['other'];
             $in_arr['middleware'] = $_POST['middleware'];
 
-            $insert = $db->update("info",$in_arr,"hash='{$in_arr['hash']}'");
+            $insert = $db->update("info", $in_arr, "hash='{$in_arr['hash']}'");
             echo "<script>alert('更新成功');location.href='?m=info'</script>";
 
-        }}
+        }
+    }
 
     $sql_num = "SELECT id FROM info";
     $totalnum = $db->db_num_rows($sql_num);
-    $pagesize=100;
+    $pagesize = 100;
     //总共有几页
-    $maxpage=ceil($totalnum/$pagesize);
-    $page=isset($_GET['page'])?$_GET['page']:1;
-    if($page <1)
-    {
-        $page=1;
+    $maxpage = ceil($totalnum / $pagesize);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page < 1) {
+        $page = 1;
     }
-    if($page>$maxpage)
-    {
-        $page=$maxpage;
+    if ($page > $maxpage) {
+        $page = $maxpage;
     }
-    $limit=" limit ".($page-1)*$pagesize.",$pagesize";
+    $limit = " limit " . ($page - 1) * $pagesize . ",$pagesize";
 
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id order by info.id DESC {$limit}";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $cus_id = $fs["customer"];
-            $url = substr($fs["1"],0,28);
-			$link_url = $fs["1"];
+            $url = substr($fs["1"], 0, 28);
+            $link_url = $fs["1"];
             $hash = $fs["2"];
             $ip = $fs["ip"];
             $customer = $fs["name"];
             $port_num = $fs["port_num"];
             $sub_num = $fs["sub_num"];
-            $cms = mb_substr($fs["cms"],0,8,"utf-8");
-            $waf = substr($fs["waf"],0,8);
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
-            $language = substr($fs["language"],0,7);
-            $middleware = substr($fs["middleware"],0,18);
+            $cms = mb_substr($fs["cms"], 0, 8, "utf-8");
+            $waf = substr($fs["waf"], 0, 8);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
+            $language = substr($fs["language"], 0, 7);
+            $middleware = substr($fs["middleware"], 0, 18);
             $weakfile_num = $fs["weakfile_num"];
             $status = $fs["status"];
 
-            $title = mb_substr($fs["title"],0,10,"utf-8");
+            $title = mb_substr($fs["title"], 0, 10, "utf-8");
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "搜集中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
                 $responsive = "队列中";
             }
@@ -1393,74 +1390,74 @@ function info() {
 											<a href=\"javascript:resetinfo('{$hash}')\">重置</a>|<a id=\"modal - 978241\" href=\"#$hash\" role=\"button\"  data-toggle=\"modal\" >编辑</a>|<a href=\"javascript:delinfo('{$hash}')\">删除</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
-        $html_str =$html_str."<table class=\"table\" style=\"font-size:14px;\"><thead>
+        $html_str = $html_str . "<table class=\"table\" style=\"font-size:14px;\"><thead>
                                 <tr><td style=\"text-align:center\"><b>当前{$page}/{$maxpage}页 &nbsp;&nbsp;&nbsp;共{$totalnum}个项目  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href='?m=info&page=1'>首页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=info&page=".($page-1)."'>上一页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=info&page=".($page+1)."'>下一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=info&page=" . ($page - 1) . "'>上一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=info&page=" . ($page + 1) . "'>下一页</a> &nbsp;&nbsp;&nbsp;
                    <a href='?m=info&page={$maxpage}'>尾页</a></b>
                                        </td></tr></thead>\r\n";
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function vul() {
+function vul()
+{
     global $db;
 
     $action = $_GET['c'];
     $hash = $_GET['p'];
 
-    if (empty($action)){
+    if (empty($action)) {
         $sql = "SELECT * FROM target_vul where hash='{$hash}' and severity='high' union all SELECT * FROM target_vul where hash='{$hash}' and severity='medium' union all SELECT * FROM target_vul where hash='{$hash}' and severity='low'  ";
-    }else if ($action == 'high'){
+    } else if ($action == 'high') {
         $sql = "SELECT * FROM target_vul where hash='{$hash}' and Severity='high' order by Severity";
-    }else if ($action == 'medium'){
+    } else if ($action == 'medium') {
         $sql = "SELECT * FROM target_vul where hash='{$hash}' and Severity='medium' order by Severity";
-    }else if ($action == 'low'){
+    } else if ($action == 'low') {
         $sql = "SELECT * FROM target_vul where hash='{$hash}' and Severity='low' order by Severity";
     }
 
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $Affects = $fs["affects"];
             $Parameter = $fs["parameter"];
             $Severity = $fs["severity"];
             $details = $fs["details"];
-            $Request = str_replace("\n",'<br>',$fs["request"]);
+            $Request = str_replace("\n", '<br>', $fs["request"]);
             $vul_cn_id = $fs["vul_cn_id"];
             $Name = get_vul_cn_name($vul_cn_id);
-            if ($Name == ''){
+            if ($Name == '') {
                 $Name = $fs["name"];
             }
             //$Response = str_replace("\n",'<br>',$fs["response"]);
 
-            if (strtolower($Severity) == 'high'){
+            if (strtolower($Severity) == 'high') {
                 $Severity = '高危';
                 $class = 'error';
-            }else if(strtolower($Severity) == 'medium'){
+            } else if (strtolower($Severity) == 'medium') {
                 $Severity = '中危';
                 $class = 'warning';
-            }else if(strtolower($Severity) == 'low' or strtolower($Severity) == 'info'){
+            } else if (strtolower($Severity) == 'low' or strtolower($Severity) == 'info') {
                 $Severity = '低危';
                 $class = 'info';
             }
 
-            if ($Parameter == 'Array'){
+            if ($Parameter == 'Array') {
                 $Parameter = '';
             }
 
-            if ($Request == 'Array'){
+            if ($Request == 'Array') {
                 $Request = '';
             }
 
@@ -1489,16 +1486,17 @@ function vul() {
 											<div style=\"width:400px;word-break: break-all; word-wrap:break-word;\">$Request</div> 
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
     }
 }
 
-function siteinfo() {
+function siteinfo()
+{
     global $db;
 
     //print_r($_POST);
@@ -1507,11 +1505,10 @@ function siteinfo() {
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM info where hash = '$hash'";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
 
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
 
 
             $url = $fs['url'];
@@ -1533,19 +1530,18 @@ function siteinfo() {
             $status = $fs['status'];
 
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'error';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'warning';
             }
-
 
 
             $html_str .= "
@@ -1578,38 +1574,38 @@ function siteinfo() {
 											<b>Web信息：</b><br>$whatweb_info<br><br>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function spider_search(){
+function spider_search()
+{
     global $db;
 
     $hashs = $_GET['hash'];
     $key = $_GET['key'];
     $hash = '';
-    $a = strlen($hashs)/32;
-    while ($a >= 1){
-        $x = substr($hashs,($a-1)*32,32);
-        $a = $a -1;
-        $hash = $hash.$x."','";
+    $a = strlen($hashs) / 32;
+    while ($a >= 1) {
+        $x = substr($hashs, ($a - 1) * 32, 32);
+        $a = $a - 1;
+        $hash = $hash . $x . "','";
     }
-    $hash = "'".substr($hash,0,-2);
+    $hash = "'" . substr($hash, 0, -2);
 
     $sql = "SELECT * FROM spider  INNER JOIN info ON info.hash = spider.hash where spider.hash in ($hash) ";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
 
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
 
             $url = $fs['1'];
             $ip = $fs['ip'];
@@ -1628,12 +1624,12 @@ function spider_search(){
             $snap_file = $fs['snap_file'];
             $url_all = $fs['url_all'];
             $act_all = $fs['act_all'];
-            $url_keys = explode('<br>',$url_all);
+            $url_keys = explode('<br>', $url_all);
             $url_key_all = '';
-            foreach ($url_keys as $url_key){
-                if (strstr($url_key,$key)){
+            foreach ($url_keys as $url_key) {
+                if (strstr($url_key, $key)) {
 //                    print $url_key.'<br>';
-                    $url_key_all = $url_key_all.$url_key.'<br>';
+                    $url_key_all = $url_key_all . $url_key . '<br>';
                 }
             }
 
@@ -1659,15 +1655,16 @@ function spider_search(){
 											$url_key_all<br><br>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
         return $html_str;
-    }else{
+    } else {
         return "";
     }
 }
 
-function spiderinfo() {
+function spiderinfo()
+{
     global $db;
 
     //print_r($_POST);
@@ -1677,11 +1674,10 @@ function spiderinfo() {
     $sql = "SELECT * FROM spider  INNER JOIN info ON info.hash = spider.hash where spider.hash = '$hash'";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
 
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
 
             $url = $fs['1'];
             $ip = $fs['ip'];
@@ -1703,29 +1699,28 @@ function spiderinfo() {
 
             global $logspiderdir;
 //            echo $logspiderdir;
-            $dir=$logspiderdir.$hash;
-            $webdir = "./TaskPython/logspider/".$hash;
-            $snap_file ='';
-            $file=array_slice(scandir($dir),2);
-            foreach ($file as $f){
-                $snap_url =  $webdir.'/'.$f;
+            $dir = $logspiderdir . $hash;
+            $webdir = "./TaskPython/logspider/" . $hash;
+            $snap_file = '';
+            $file = array_slice(scandir($dir), 2);
+            foreach ($file as $f) {
+                $snap_url = $webdir . '/' . $f;
                 $snap_file .= "<a href=\"$snap_url\" target='_blank'>$snap_url</a><br>";
             }
 
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'error';
                 $responsive = "扫描中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'warning';
             }
-
 
 
             $html_str .= "
@@ -1798,17 +1793,18 @@ function spiderinfo() {
 											$act_all<br><br>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function cusinfo() {
+function cusinfo()
+{
     global $db;
 
     //print_r($_POST);
@@ -1819,34 +1815,33 @@ function cusinfo() {
     $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id  INNER JOIN  spider ON spider.hash = info.hash  where info.customer = $id order by info.createtime desc";
 //    echo $sql;
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
             $cus_id = $fs["customer"];
-            $url = substr($fs["1"],0,32);
+            $url = substr($fs["1"], 0, 32);
             $link_url = $fs["1"];
             $hash = $fs["2"];
             $ip = $fs["ip"];
             $customer = $fs["name"];
             $port_num = $fs["port_num"];
             $sub_num = $fs["sub_num"];
-            $cms = mb_substr($fs["cms"],0,8,"utf-8");
-            $waf = substr($fs["waf"],0,8);
-            $os = substr(str_replace("Microsoft ","",$fs["os"]),0,13);
-            $language = substr($fs["language"],0,12);
-            $middleware = substr($fs["middleware"],0,18);
+            $cms = mb_substr($fs["cms"], 0, 8, "utf-8");
+            $waf = substr($fs["waf"], 0, 8);
+            $os = substr(str_replace("Microsoft ", "", $fs["os"]), 0, 13);
+            $language = substr($fs["language"], 0, 12);
+            $middleware = substr($fs["middleware"], 0, 18);
             $weakfile_num = $fs["weakfile_num"];
-            $high = get_severity($hash,'high');
-            $medium = get_severity($hash,'medium');
-            $low = get_severity($hash,'low');
+            $high = get_severity($hash, 'high');
+            $medium = get_severity($hash, 'medium');
+            $low = get_severity($hash, 'low');
 
             $key_num = $fs["key_num"];
             $bad_num = $fs["bad_num"];
             $evil_num = $fs["evil_num"];
 
-            $title = mb_substr($fs["title"],0,10,"utf-8");
+            $title = mb_substr($fs["title"], 0, 10, "utf-8");
             $class = 'success';
 
             $html_str .= "
@@ -1904,28 +1899,29 @@ function cusinfo() {
                                             <a href=\"?m=siteinfo&p={$hash}\">详情</a>|<a href=\"javascript:delinfo('{$hash}')\">删除</a>|<a href=\"javascript:exportreport('{$hash}')\">报告</a>
                                         </td>
                                     </tr>\r\n";
-            $i ++;
+            $i++;
         }
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
 
-function spider() {
+function spider()
+{
     global $db;
 
     //print_r($_POST);
     $action = $_GET['c'];
 
-    if ($action == 'new'){
+    if ($action == 'new') {
 
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
 
-            $urls = explode("\n",$_POST['url']);
+            $urls = explode("\n", $_POST['url']);
             foreach ($urls as $url) {
 
                 $in_arr['url'] = $url;
@@ -1954,7 +1950,7 @@ function spider() {
 
                 $in_scan_arr['hash'] = $in_arr['hash'];
 
-                $insert = $db->insert_into("scan_list",$in_scan_arr);
+                $insert = $db->insert_into("scan_list", $in_scan_arr);
 
                 $in_arr_info['url'] = $url;
                 $in_arr_info['createtime'] = date('Y-m-d');
@@ -1962,16 +1958,16 @@ function spider() {
                 $in_arr_info['customer'] = $_POST['customer'];
                 $in_arr_info['hash'] = $in_arr['hash'];
 
-                $insert = $db->insert_into("info",$in_arr_info);
+                $insert = $db->insert_into("info", $in_arr_info);
 
             }
-                echo "<script>alert('添加成功');location.href='?m=spider'</script>";
+            echo "<script>alert('添加成功');location.href='?m=spider'</script>";
 
         }
-    }else if ($action == 'update'){
+    } else if ($action == 'update') {
         //更新
         //print_r($_POST);
-        if(!empty($_POST['url'])){
+        if (!empty($_POST['url'])) {
 
             $in_arr['hash'] = $_GET['p'];
 
@@ -1991,41 +1987,39 @@ function spider() {
 
             #if ( $_POST['auth'] == 'on' ) nginx_vhost( $in_arr['url'] , $in_arr['cookie'] );
 
-            $insert = $db->update("scan_list",$in_arr,"hash='{$in_arr['hash']}'");
+            $insert = $db->update("scan_list", $in_arr, "hash='{$in_arr['hash']}'");
             echo "<script>alert('更新成功');location.href='?m=scan'</script>";
 
-        }}
+        }
+    }
 
     $sql_num = "SELECT id FROM spider";
     $totalnum = $db->db_num_rows($sql_num);
-    $pagesize=100;
+    $pagesize = 100;
     //总共有几页
-    $maxpage=ceil($totalnum/$pagesize);
-    $page=isset($_GET['page'])?$_GET['page']:1;
-    if($page <1)
-    {
-        $page=1;
+    $maxpage = ceil($totalnum / $pagesize);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page < 1) {
+        $page = 1;
     }
-    if($page>$maxpage)
-    {
-        $page=$maxpage;
+    if ($page > $maxpage) {
+        $page = $maxpage;
     }
-    $limit=" limit ".($page-1)*$pagesize.",$pagesize";
+    $limit = " limit " . ($page - 1) * $pagesize . ",$pagesize";
 
     #$sql = "SELECT * FROM scan_list as a,target_info as b where a.hash = b.hash";
     $sql = "SELECT * FROM spider INNER JOIN  customer ON spider.customer = customer.id INNER JOIN  info ON spider.hash = info.hash order by spider.id DESC {$limit}";
     $results = $db->query($sql);
-    if (mysql_num_rows($results) > 0){
+    if (mysqli_num_rows($results) > 0) {
         $i = 1;
-        while ($fs = $db->fetch_array($results))
-        {
+        while ($fs = $db->fetch_array($results)) {
             $id = $i;
-            $url = substr($fs["1"],0,32);
-			$link_url = $fs["1"];
+            $url = substr($fs["1"], 0, 32);
+            $link_url = $fs["1"];
             $customer = $fs["name"];
             $status = $fs["check_status"];
             $hash = $fs["3"];
-            $url_num= $fs["url_num"];
+            $url_num = $fs["url_num"];
             $act_num = $fs["act_num"];
             $key_num = $fs["key_num"];
             $bad_num = $fs["bad_num"];
@@ -2033,32 +2027,32 @@ function spider() {
             $evil_num = $fs["evil_num"];
             $delay = $fs["12"];
             $finishtime = $fs["10"];
-            $title = mb_substr($fs["title"],0,8,"utf-8");
+            $title = mb_substr($fs["title"], 0, 8, "utf-8");
 
-            if ($status == 'ok'){
+            if ($status == 'ok') {
                 $class = 'success';
                 $responsive = "已完成";
-            }else if ($status == 'ing'){
+            } else if ($status == 'ing') {
                 $class = 'warning';
                 $responsive = "爬取中";
-            }else if ($status == 'new'){
+            } else if ($status == 'new') {
                 $class = 'info';
                 $responsive = "队列中";
-            }else{
+            } else {
                 $class = 'error';
                 $responsive = "队列中";
             }
 
 
-            if ($delay == '1'){
+            if ($delay == '1') {
                 $scan_delay = "每月一次";
-            }else if ($delay == '2'){
+            } else if ($delay == '2') {
                 $scan_delay = "每季度一次";
-            }else if ($delay == '3'){
+            } else if ($delay == '3') {
                 $scan_delay = "每半年一次";
-            }else if ($delay == '4'){
+            } else if ($delay == '4') {
                 $scan_delay = "仅一次";
-            }else{
+            } else {
                 $scan_delay = "仅一次";
             }
 
@@ -2109,30 +2103,31 @@ function spider() {
 											<a href=\"?m=spiderinfo&p={$hash}\">详情</a>|<a href=\"javascript:resetspider('{$hash}')\">重置</a>|<a href=\"javascript:delspider('{$hash}')\">删除</a>
 										</td>
 									</tr>\r\n";
-            $i ++;
+            $i++;
         }
 
-        $html_str =$html_str."<table class=\"table\" style=\"font-size:14px;\"><thead>
+        $html_str = $html_str . "<table class=\"table\" style=\"font-size:14px;\"><thead>
                                 <tr><td style=\"text-align:center\"><b>当前{$page}/{$maxpage}页 &nbsp;&nbsp;&nbsp;共{$totalnum}个项目  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                    <a href='?m=spider&page=1'>首页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=spider&page=".($page-1)."'>上一页</a> &nbsp;&nbsp;&nbsp;
-                   <a href='?m=spider&page=".($page+1)."'>下一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=spider&page=" . ($page - 1) . "'>上一页</a> &nbsp;&nbsp;&nbsp;
+                   <a href='?m=spider&page=" . ($page + 1) . "'>下一页</a> &nbsp;&nbsp;&nbsp;
                    <a href='?m=spider&page={$maxpage}'>尾页</a></b>
                                        </td></tr></thead>\r\n";
 
         return $html_str;
-    }else{
+    } else {
         return "";
 
     }
 }
 
-function editscan() {
+function editscan()
+{
     global $db;
 
     $hash = $_GET['p'];
 
-    if (!empty($hash)){
+    if (!empty($hash)) {
         $sql = "SELECT * FROM scan_list where hash='{$hash}'";
 
         $results = $db->fetch_assoc($sql);
@@ -2142,12 +2137,13 @@ function editscan() {
 
 }
 
-function editcustomer() {
+function editcustomer()
+{
     global $db;
 
     $id = $_GET['id'];
 
-    if (!empty($hash)){
+    if (!empty($hash)) {
         $sql = "SELECT * FROM customer where id='{$id}'";
 
         $results = $db->fetch_assoc($sql);
@@ -2157,60 +2153,60 @@ function editcustomer() {
 
 }
 
-function point() {
-	global $db;
-	
-	$action = $_GET['c'];
-	
-	if ($action == 'new'){
-		//新添加
-		//print_r($_POST);
-		if(!empty($_POST['ip'])){
-			
-			$in_arr['pointip'] = $_POST['ip'];
-			$in_arr['pointport'] = $_POST['port'];
-			$in_arr['status'] = $_POST['status'];
-			$in_arr['hash'] = md5($in_arr['pointip'].$in_arr['pointport']);
-			
-			$insert = $db->insert_into("point_server",$in_arr);
-		}
-	}else if ($action == 'update'){
-		//更新
-		//print_r($_POST);
-		$key = $_GET['p'];
-		if(!empty($_POST['ip']) and !empty($key)){
-			
-			$in_arr['pointip'] = $_POST['ip'];
-			$in_arr['pointport'] = $_POST['port'];
-			$in_arr['status'] = $_POST['status'];
-			
-			$update = $db->update("point_server",$in_arr,"hash='{$key}'");
-		}
-	}
-	
-	$sql = "SELECT * FROM point_server";
-	
-	$results = $db->query($sql);
-	if (mysql_num_rows($results) > 0){
-		$i = 1;
-		while ($fs = $db->fetch_array($results))
-		{
-			$id = $i;
-			$ip = $fs["pointip"];
-			$port = $fs["pointport"];
-			$level = $fs["level"];
-			$status = $fs["status"];
-			$hash = $fs["hash"];
-			
-			if ($status == '1'){
-				$class = 'success';
-				$status = '启用';
-			}else{
-				$class = 'warning';
-				$status = '禁用';
-			}
-			
-			$html_str .= "
+function point()
+{
+    global $db;
+
+    $action = $_GET['c'];
+
+    if ($action == 'new') {
+        //新添加
+        //print_r($_POST);
+        if (!empty($_POST['ip'])) {
+
+            $in_arr['pointip'] = $_POST['ip'];
+            $in_arr['pointport'] = $_POST['port'];
+            $in_arr['status'] = $_POST['status'];
+            $in_arr['hash'] = md5($in_arr['pointip'] . $in_arr['pointport']);
+
+            $insert = $db->insert_into("point_server", $in_arr);
+        }
+    } else if ($action == 'update') {
+        //更新
+        //print_r($_POST);
+        $key = $_GET['p'];
+        if (!empty($_POST['ip']) and !empty($key)) {
+
+            $in_arr['pointip'] = $_POST['ip'];
+            $in_arr['pointport'] = $_POST['port'];
+            $in_arr['status'] = $_POST['status'];
+
+            $update = $db->update("point_server", $in_arr, "hash='{$key}'");
+        }
+    }
+
+    $sql = "SELECT * FROM point_server";
+
+    $results = $db->query($sql);
+    if (mysqli_num_rows($results) > 0) {
+        $i = 1;
+        while ($fs = $db->fetch_array($results)) {
+            $id = $i;
+            $ip = $fs["pointip"];
+            $port = $fs["pointport"];
+            $level = $fs["level"];
+            $status = $fs["status"];
+            $hash = $fs["hash"];
+
+            if ($status == '1') {
+                $class = 'success';
+                $status = '启用';
+            } else {
+                $class = 'warning';
+                $status = '禁用';
+            }
+
+            $html_str .= "
 									<tr class=\"$class\">
 										<td style=\"text-align:center\">
 											$id
@@ -2232,76 +2228,76 @@ function point() {
 										</td>
 										
 									</tr>\r\n";
-			$i ++;
-		}
-		
-		return $html_str;
-	}else{
-		return "";
-	}
+            $i++;
+        }
+
+        return $html_str;
+    } else {
+        return "";
+    }
 
 }
 
 
-function set() {
-	global $db;
-	
-	$action = $_GET['c'];
-	
-	if ($action == 'new'){
-		//新添加
-		//print_r($_POST);
-		if(!empty($_POST['username']) and !empty($_POST['passwd'])){
-			
-			$in_arr['username'] = $_POST['username'];
-			$in_arr['passwd'] = $_POST['passwd'];
-			$in_arr['phone'] = $_POST['phone'];
-			$in_arr['email'] = $_POST['mail'];
-			$in_arr['status'] = $_POST['status'];
-			$in_arr['ctime'] = time();
-			
-			$insert = $db->insert_into("user",$in_arr);
-		}
-	}else if ($action == 'update'){
-		//更新
-		//print_r($_POST);
-		if(!empty($_POST['username'])){
-			
-			$in_arr['username'] = $_POST['username'];
-			//$in_arr['passwd'] = $_POST['passwd'];
-			$in_arr['phone'] = $_POST['phone'];
-			$in_arr['email'] = $_POST['mail'];
-			$in_arr['status'] = $_POST['status'];
-			
-			$update = $db->update("user",$in_arr,"username='{$in_arr['username']}'");
+function set()
+{
+    global $db;
+
+    $action = $_GET['c'];
+
+    if ($action == 'new') {
+        //新添加
+        //print_r($_POST);
+        if (!empty($_POST['username']) and !empty($_POST['passwd'])) {
+
+            $in_arr['username'] = $_POST['username'];
+            $in_arr['passwd'] = $_POST['passwd'];
+            $in_arr['phone'] = $_POST['phone'];
+            $in_arr['email'] = $_POST['mail'];
+            $in_arr['status'] = $_POST['status'];
+            $in_arr['ctime'] = time();
+
+            $insert = $db->insert_into("user", $in_arr);
+        }
+    } else if ($action == 'update') {
+        //更新
+        //print_r($_POST);
+        if (!empty($_POST['username'])) {
+
+            $in_arr['username'] = $_POST['username'];
+            //$in_arr['passwd'] = $_POST['passwd'];
+            $in_arr['phone'] = $_POST['phone'];
+            $in_arr['email'] = $_POST['mail'];
+            $in_arr['status'] = $_POST['status'];
+
+            $update = $db->update("user", $in_arr, "username='{$in_arr['username']}'");
             echo "<script>alert('更新成功');location.href='?m=set'</script>";
 
         }
-	}
-	
-	$sql = "SELECT * FROM user";
-	
-	$results = $db->query($sql);
-	if (mysql_num_rows($results) > 0){
-		$i = 1;
-		while ($fs = $db->fetch_array($results))
-		{
-			$id = $i;
-			$username = $fs["username"];
-			$email = $fs["email"];
-			$phone = $fs["phone"];
-			$status = $fs["status"];
-			$hash = md5($username);
-			
-			if ($status == '1'){
-				$class = 'success';
-				$status = '启用';
-			}else{
-				$class = 'warning';
-				$status = '禁用';
-			}
-			
-			$html_str .= "
+    }
+
+    $sql = "SELECT * FROM user";
+
+    $results = $db->query($sql);
+    if (mysqli_num_rows($results) > 0) {
+        $i = 1;
+        while ($fs = $db->fetch_array($results)) {
+            $id = $i;
+            $username = $fs["username"];
+            $email = $fs["email"];
+            $phone = $fs["phone"];
+            $status = $fs["status"];
+            $hash = md5($username);
+
+            if ($status == '1') {
+                $class = 'success';
+                $status = '启用';
+            } else {
+                $class = 'warning';
+                $status = '禁用';
+            }
+
+            $html_str .= "
 									<tr class=\"$class\">
 										<td style=\"text-align:center\">
 											$id
@@ -2322,62 +2318,63 @@ function set() {
 											<a id=\"modal-978241\" href=\"#$hash\" role=\"button\" class=\"btn\" data-toggle=\"modal\">修改</a>
 										</td>
 									</tr>\r\n";
-			$i ++;
-		}
-		
-		return $html_str;
-	}else{
-		return "";
-	}
+            $i++;
+        }
+
+        return $html_str;
+    } else {
+        return "";
+    }
 
 }
 
 
-function login() {
-	global $db;
-	
-	$username = $_POST['username'];
-	$password = $_POST['password'];
+function login()
+{
+    global $db;
+
+    $username = $_POST['username'];
+    $password = $_POST['password'];
     $remember = $_POST['remember'];
 
 
-    if($remember == 1){
-        setcookie('user',$username,time()+3600*24);
-        setcookie('pass',$password,time()+3600*24);
-        setcookie('remember',$remember,time()+3600*24);
-    }else{
-        setcookie('user',$username,time()-3600*24);
-        setcookie('pass',$password,time()-3600*24);
-        setcookie('remember',$remember,time()-3600*24);
+    if ($remember == 1) {
+        setcookie('user', $username, time() + 3600 * 24);
+        setcookie('pass', $password, time() + 3600 * 24);
+        setcookie('remember', $remember, time() + 3600 * 24);
+    } else {
+        setcookie('user', $username, time() - 3600 * 24);
+        setcookie('pass', $password, time() - 3600 * 24);
+        setcookie('remember', $remember, time() - 3600 * 24);
     }
 
-	
-	//print_r($_POST);
-	
-	if (!empty($username) and !empty($password)){
-		$sql = "SELECT * FROM `user` where username='{$username}' and passwd='{$password}'";
-		
-		$results = $db->fetch_assoc($sql);
-		$rows = $db->db_num_rows($sql);
-		if ($rows > 0 and $results['status'] == 1){
-			$_SESSION['username'] = $results['username'];
-			$_SESSION['r_ip'] = $_SERVER['REMOTE_ADDR'];
 
-			
-			$up_arr['lasttime'] = time();
-			$update = $db->update("user",$up_arr,"username='{$username}'");
-			
-			Message(" $username 登录成功! 正在跳转... ","?m=index",0,500);
-		}else if ($rows > 0 and $results['status'] == 0){
-			Message(" 账号被禁用，请联系管理员 ","?m=login",0,3000);
-		}
-	}
+
+    if (!empty($username) and !empty($password)) {
+        $sql = "SELECT * FROM `user` where username='{$username}' and passwd='{$password}'";
+
+        $results = $db->fetch_assoc($sql);
+        $rows = $db->db_num_rows($sql);
+        if ($rows > 0 and $results['status'] == 1) {
+            $_SESSION['username'] = $results['username'];
+            $_SESSION['r_ip'] = $_SERVER['REMOTE_ADDR'];
+
+
+            $up_arr['lasttime'] = time();
+            $update = $db->update("user", $up_arr, "username='{$username}'");
+
+            Message(" $username 登录成功! 正在跳转... ", "?m=index", 0, 500);
+        } else if ($rows > 0 and $results['status'] == 0) {
+            Message(" 账号被禁用，请联系管理员 ", "?m=login", 0, 3000);
+        }
+    }
 
 }
 
-function logout() {
-	unset($_SESSION['username']);
-	header("Location: ?m=login");
+function logout()
+{
+    unset($_SESSION['username']);
+    header("Location: ?m=login");
 }
 
 ?>
