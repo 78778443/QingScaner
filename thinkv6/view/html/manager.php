@@ -95,7 +95,7 @@
                     </div>
 
                     <div class="tab-pane" id="panel-910581">
-                        <form action="?m=manager&c=new" method="POST" class="form-horizontal">
+                        <form action="<?= url('manager/new') ?>" method="POST" class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">所属客户</label>
                                 <div class="col-sm-10">
@@ -174,7 +174,7 @@
                         </form>
                     </div>
                     <div class="tab-pane" id="panel-910582">
-                        <form action="?m=search&c=search" method="POST" class="form-horizontal">
+                        <form action="<?= url('search/search') ?>" method="POST" class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label"> 站点名称 </label>
                                 <div class="col-sm-10">
@@ -194,11 +194,9 @@
                                 <div class="col-sm-10">
                                     <select class="form-control" name="customer">
                                         <option value="">所有客户</option>
-
                                         {foreach $customer as $key=>$vo }
                                         <option value="{$vo.id}">{$vo.name}</option>
                                         {/foreach}
-
                                     </select>
                                 </div>
                             </div>

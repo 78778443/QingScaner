@@ -13,10 +13,10 @@
             <div class="navbar-collapse collapse" role="navigation">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="<?php echo url('index/manager') ?>">管理中心</a>
+                        <a href="<?php echo url('manager/index') ?>">管理中心</a>
                     </li>
                     <li>
-                        <a href="<?php echo url('index/customer') ?>">客户管理</a>
+                        <a href="<?php echo url('customer/index') ?>">客户管理</a>
                     </li>
                     <li>
                         <a href="<?php echo url('index/scan') ?>">扫描管理</a>

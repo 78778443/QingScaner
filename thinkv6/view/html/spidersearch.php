@@ -138,17 +138,9 @@
 								<select name="customer">
 									<option value="">所有客户</option>
 
-									<?php
-								global $db;
-
-								$sql = "SELECT * FROM customer order by name desc";
-
-								$results = $db->query($sql);
-									while ($fs = $db->fetch_array($results)){
-									?>
-									<option value="<?php echo $fs['0'];?>"><?php echo $fs['1'];?></option>
-									<?php
-								} ?>
+									                                        {foreach $customer as $key=>$vo }
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                        {/foreach}
 								</select>
 								<label>URL关键字<font color="orange" size="2px">&nbsp;&nbsp;&nbsp;如：.action&nbsp;&nbsp;.do等</font></label><input type="text" name="url_key"/>
 

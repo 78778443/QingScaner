@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="tab-pane" id="panel-910581">
-                        <form action="?m=customer&c=new" method="POST" class="form-horizontal">
+                        <form action="<?=url('customer/new') ?>" method="POST" class="form-horizontal">
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">客户名称</label>
@@ -100,14 +100,15 @@
                                 <label class="col-sm-2 control-label">服务期限</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" value="2017.01.20" style="width:180px"
-                                                              name="date1"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input
-                                            type="date" class="form-control" value="2018.01.20" style="width:180px" name="date2"/>
+                                           name="date1"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input
+                                            type="date" class="form-control" value="2018.01.20" style="width:180px"
+                                            name="date2"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">服务类型</label>
                                 <div class="col-sm-10">
-                                    <select name="type"  class="form-control">
+                                    <select name="type" class="form-control">
                                         <option value="1">定期扫描+漏洞预警+敏感字检测</option>
                                         <option value="2">漏洞预警+敏感字检测</option>
                                         <option value="3">漏洞预警+定期扫描</option>
@@ -118,7 +119,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">扫描周期</label>
                                 <div class="col-sm-10">
-                                    <select name="delay"  class="form-control">
+                                    <select name="delay" class="form-control">
                                         <option value="4">仅一次</option>
                                         <option value="1">每月一次</option>
                                         <option value="2">每季度一次</option>
