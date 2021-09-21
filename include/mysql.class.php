@@ -144,14 +144,14 @@ class mysql{
     //获得错误描述
     function GetError()
     {
-        $str = mysqli_error();
+        $str = mysqli_error($this->conn);
         return $str;
     }
 	function free_result($query) {
 		return @mysqli_free_result($query);
 	}
 	function escape_string($str){
-		return mysqli_escape_string($str);
+		return mysqli_escape_string($this->conn,$str);
 	}
 	//获取字段数
 	function num_fields($query) {
