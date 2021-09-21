@@ -31,7 +31,6 @@ class Manager extends BaseController
 
         $results = Db::query($sql);
 
-        var_dump($sql,$results);die;
         $html_str = "";
         if ($results) {
             foreach ($results as $i => $fs) {

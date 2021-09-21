@@ -94,50 +94,89 @@
 
 
                     <div class="tab-pane" id="panel-910581">
-                        <form action="?m=search&c=search" method="POST">
-                            <fieldset>
-                                <label><font color="orange" size="2px">检索tag：请输入想要查询的关键字即可</font></label>
-                                <label>站点名称</label><input type="text" name="title"/>
+                        <form action="?m=search&c=search" method="POST" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"><font color="orange" size="2px">检索tag：请输入想要查询的关键字即可</font></label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">站点名称</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="title"/>
 
-                                <label>URL</label><input type="text" name="url"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">URL</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="url"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属客户</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="customer">
+                                        <option value="">所有客户</option>
+                                        {foreach $customer as $key=>$vo }
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">扫描周期</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="delay">
+                                        <option value="">所有模式</option>
+                                        <option value="1">每月一次</option>
+                                        <option value="2">每季度一次</option>
+                                        <option value="3">每半年一次</option>
+                                        <option value="4">不扫描</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">操作系统 </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="os" placeholder="如：Linux、Win等"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">开放端口 </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="port" placeholder="如：8080、7001等"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">中间件 </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="middleware"
+                                           placeholder="如：IIS、Apache、Weblogic等"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">CMS</label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="cms"
+                                           placeholder="如：Dede、Jcms、Wordpress等"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">开发技术
+                                </label>
+                                <div class="col-sm-10">
+                                    <input class="form-control" type="text" name="language"
+                                           placeholder="如：php、jsp、asp.net等"/>
 
-                                <label>所属客户</label>
 
-                                <select name="customer">
-                                    <option value="">所有客户</option>
-
-                                    {foreach $customer as $key=>$vo }
-                                    <option value="{$vo.id}">{$vo.name}</option>
-                                    {/foreach}
-
-                                </select>
-                                <label>扫描周期</label>
-                                <select name="delay">
-                                    <option value="">所有模式</option>
-                                    <option value="1">每月一次</option>
-                                    <option value="2">每季度一次</option>
-                                    <option value="3">每半年一次</option>
-                                    <option value="4">不扫描</option>
-                                </select>
-
-                                <label>操作系统<font color="orange" size="2px">&nbsp;&nbsp;&nbsp;如：Linux、Win等</font></label><input
-                                        type="text" name="os"/>
-                                <label>开放端口<font color="orange" size="2px">&nbsp;&nbsp;&nbsp;如：8080、7001等</font></label><input
-                                        type="text" name="port"/>
-                                <label>中间件<font color="orange"
-                                                size="2px">&nbsp;&nbsp;&nbsp;如：IIS、Apache、Weblogic等</font></label><input
-                                        type="text" name="middleware"/>
-                                <label>CMS<font color="orange"
-                                                size="2px">&nbsp;&nbsp;&nbsp;如：Dede、Jcms、Wordpress等</font></label><input
-                                        type="text" name="cms"/>
-                                <label>开发技术<font color="orange"
-                                                 size="2px">&nbsp;&nbsp;&nbsp;如：php、jsp、asp.net等</font></label><input
-                                        type="text" name="language"/>
-
-                                <label></label>
-                                <button type="submit" class="btn">搜索</button>
-                                <button type="submit" class="btn">取消</button>
-                            </fieldset>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 control-label"></div>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn">搜索</button>
+                                    <button type="submit" class="btn">取消</button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>

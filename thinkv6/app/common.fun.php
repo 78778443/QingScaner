@@ -515,11 +515,8 @@ function ld_is_url($str)
 
 function get_severity($hash, $severity)
 {
-    global $db;
-
-    $sql = "SELECT * FROM target_vul where hash='{$hash}' and Severity='{$severity}' order by Severity";
-    $results = $db->query($sql);
-    return mysqli_num_rows($results);
+    $results = Db::table("target_vul")->where(["hash"=>$hash,'Severity'=>$severity])->order('Severity')->count();
+    return $results;
 }
 
 function get_vul_cn_name($id)

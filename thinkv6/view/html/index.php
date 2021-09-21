@@ -240,7 +240,7 @@
 
 
                     <div class="tab-pane" id="panel-910581">
-                        <form action="?m=search&c=search" method="POST" class="form-horizontal">
+                        <form action="<?php echo url('search/search') ?>" method="POST" class="form-horizontal">
                             <label><font color="orange" size="2px">检索tag：请输入想要查询的关键字即可</font></label>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">站点名称</label>

@@ -33,13 +33,10 @@ class Search extends BaseController
             $sql1 = "select hash from info where language like '%$language%' and cms like '%$cms%' and port like '%$port%' and title like '%$title%' and middleware like '%$middleware%' and os like '%$os%'";
             $results1 = Db::query($sql1);
 
-          var_dump($sql1,$results1);die;
             if ($results1) {
                 foreach ($results1 as $i => $fs) {
 
-                    $in_arr[$i] = $fs["0"];
-//                    echo $in_arr[$i].'---';
-                    $i = $i + 1;
+                    $in_arr[$i] = $fs["hash"];
                 }
             }
 //            echo "<script>alert('info');</script>";
@@ -122,15 +119,16 @@ class Search extends BaseController
 
 
         $sql = "SELECT * FROM info INNER JOIN  customer ON info.customer = customer.id  INNER JOIN  spider ON spider.hash = info.hash where info.hash in ($hash) order by info.id desc";
-
+//echo $sql;die;
         $results = Db::query($sql);
+        $html_str = "";
         if ($results) {
             foreach ($results as $i => $fs) {
                 $id = $i;
                 $cus_id = $fs["customer"];
-                $url = substr($fs["1"], 0, 28);
-                $link_url = $fs["1"];
-                $hash = $fs["2"];
+                $url = substr($fs["url"], 0, 28);
+                $link_url = $fs["url"];
+                $hash = $fs["hash"];
                 $ip = $fs["ip"];
                 $customer = $fs["name"];
                 $port_num = $fs["port_num"];
@@ -210,11 +208,10 @@ class Search extends BaseController
                 $i++;
             }
 
-            return $html_str;
-        } else {
-            return "";
 
         }
+
+        return $html_str;
     }
 
 }
